@@ -20,8 +20,9 @@ document.addEventListener(
   true
 );
 
-function checkText(element) {
+function checkText(element, event) {
   const text = element.isContentEditable ? element.innerHTML : element.value; // Get the text from the element
+  event.target.textContent = "Checking..."; // Change the button text to "Checking..."
 
   fetch("http://localhost:5000/suggestions", {
     method: "POST",
@@ -32,6 +33,7 @@ function checkText(element) {
   })
     .then((response) => response.json())
     .then((result) => {
+      event.target.textContent = "Check Text"; // Change the button text back to "Check Text"
       // Update the element with the suggestions received from the API
       if (element.isContentEditable) {
         element.innerHTML = result;
@@ -56,8 +58,8 @@ function createButton(element) {
 
   button.id = "vera-button";
 
-  button.onclick = function () {
-    checkText(element);
+  button.onclick = function (event) {
+    checkText(element, event);
   };
   element.parentNode.insertBefore(button, element.nextSibling);
 }
