@@ -12,7 +12,6 @@ document.addEventListener(
     }
 
     if (event.target.isContentEditable) {
-      console.log(event.target);
       createButton(event.target);
       selectedField = event.target;
     }
@@ -103,7 +102,6 @@ function createButton(element) {
 
   // make the button float to the top right of the element
   const rect = element.getBoundingClientRect();
-  console.log(rect);
   button.style.top = `${rect.height - 30}px`;
   button.style.left = `${rect.width - 85}px`;
   button.style.position = "absolute";
