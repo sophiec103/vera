@@ -50,8 +50,8 @@ function createButton(element) {
   // make the button float to the top right of the element
   const rect = element.getBoundingClientRect();
   console.log(rect);
-  button.style.top = "5px";
-  button.style.left = `${rect.width - 100}px`;
+  button.style.top = `${rect.height - 30}px`;
+  button.style.left = `${rect.width - 85}px`;
   button.style.position = "absolute";
 
   button.id = "vera-button";
