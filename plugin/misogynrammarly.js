@@ -32,11 +32,12 @@ function checkText(element) {
   })
     .then((response) => response.json())
     .then((result) => {
-      // Update the element with the suggestions received from the API
+      const suggestionsLine = `<div class="suggestions">${result}</div>`;
+
       if (element.isContentEditable) {
-        element.innerHTML = result;
+        element.innerHTML += suggestionsLine;
       } else {
-        element.value = result;
+        element.value += "\n" + result;
       }
     })
     .catch((error) => console.error("There was an error!", error));
