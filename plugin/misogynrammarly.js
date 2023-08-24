@@ -35,7 +35,7 @@ function checkText(element, event) {
     .then((result) => {
       event.target.textContent = "Check Text"; // Change the button text back to "Check Text"
       // Update the element with the suggestions received from the API
-      const suggestionsLine = `<div class="suggestions">${result}</div>`;
+      const suggestionsLine = `<div class="vera-suggestions">${result}</div>`;
 
       if (element.isContentEditable) {
         element.innerHTML += suggestionsLine;
