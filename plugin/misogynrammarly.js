@@ -32,19 +32,30 @@ function checkText(element, event) {
   })
     .then((response) => response.json())
     .then((result) => {
+      const rect = element.getBoundingClientRect();
       // Remove the "Checking..." button
       event.target.parentNode.removeChild(event.target);
 
       // Create "accept" and "reject" buttons
       const acceptButton = document.createElement("button");
       acceptButton.innerHTML = "Accept";
-      acceptButton.classList.add("vera-accept-button");
+      acceptButton.classList.add("vera-button");
       acceptButton.onclick = () => acceptSuggestion(element, result);
+      acceptButton.id = "vera-accept-button";
+      
+      acceptButton.style.top = `${rect.height - 30}px`;
+      acceptButton.style.left = `${rect.width - 120}px`;
+      acceptButton.style.position = "absolute";
 
       const rejectButton = document.createElement("button");
       rejectButton.innerHTML = "Reject";
-      rejectButton.classList.add("vera-reject-button");
+      rejectButton.classList.add("vera-button");
       rejectButton.onclick = () => rejectSuggestion(element);
+      rejectButton.id = "vera-reject-button";
+
+      rejectButton.style.top = `${rect.height - 30}px`;
+      rejectButton.style.left = `${rect.width - 60}px`;
+      rejectButton.style.position = "absolute";
 
       // Insert the buttons next to the element
       element.parentNode.insertBefore(acceptButton, element.nextSibling);
@@ -81,12 +92,12 @@ function rejectSuggestion(element) {
   }
 
   // Remove the "accept" and "reject" buttons
-  const acceptButton = element.parentNode.querySelector(".vera-accept-button");
+  const acceptButton = element.parentNode.querySelector("#vera-accept-button");
   if (acceptButton) {
     acceptButton.parentNode.removeChild(acceptButton);
   }
 
-  const rejectButton = element.parentNode.querySelector(".vera-reject-button");
+  const rejectButton = element.parentNode.querySelector("#vera-reject-button");
   if (rejectButton) {
     rejectButton.parentNode.removeChild(rejectButton);
   }
