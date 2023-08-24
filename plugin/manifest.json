@@ -9,7 +9,6 @@
     {
       "matches": ["<all_urls>"],
       "js": [
-        "lib/jquery-3.7.0.min.js",
         "misogynrammarly.js"
       ],
       "css": [
