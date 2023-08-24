@@ -4,11 +4,8 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from constants import OPENAI_API_KEY
 
-#openai.organization = "YOUR_ORG_ID"
 openai.api_key = OPENAI_API_KEY
 openai.Model.list()
-
-sentences = "I was just wondering if this works? I'm not sure, but I think my idea works better. Thank you! Sorry for bothering you. Have a nice day."
 
 app = Flask(__name__)
 CORS(app)
