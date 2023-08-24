@@ -40,6 +40,7 @@ function checkText(element, event) {
       const acceptButton = document.createElement("button");
       acceptButton.innerHTML = "Accept";
       acceptButton.classList.add("vera-button");
+      acceptButton.classList.add("vera-accept");
       acceptButton.onclick = () => acceptSuggestion(element, result);
       acceptButton.id = "vera-accept-button";
       
@@ -50,6 +51,7 @@ function checkText(element, event) {
       const rejectButton = document.createElement("button");
       rejectButton.innerHTML = "Reject";
       rejectButton.classList.add("vera-button");
+      rejectButton.classList.add("vera-reject");
       rejectButton.onclick = () => rejectSuggestion(element);
       rejectButton.id = "vera-reject-button";
 
