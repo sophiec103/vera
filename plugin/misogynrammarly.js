@@ -1,23 +1,26 @@
 var selectedField = null;
 
-document.addEventListener('focusin', function(event) {
-  if (selectedField == event.target || event.target.id == 'vera-button') {
-    return;
-  }
+document.addEventListener(
+  "focusin",
+  function (event) {
+    if (selectedField == event.target || event.target.id == "vera-button") {
+      return;
+    }
 
-  if (selectedField != event.target && selectedField != null) {
-    deleteButton();
-  }
+    if (selectedField != event.target && selectedField != null) {
+      deleteButton();
+    }
 
-  if (event.target.isContentEditable) {
-    console.log(event.target);
-    createButton(event.target);
-    selectedField = event.target;
-  }
-}, true);
+    if (event.target.isContentEditable) {
+      console.log(event.target);
+      createButton(event.target);
+      selectedField = event.target;
+    }
+  },
+  true
+);
 
-function checkText(event) {
-  const element = event.target; // Get the target element from the event
+function checkText(element) {
   const text = element.isContentEditable ? element.innerHTML : element.value; // Get the text from the element
 
   fetch("http://localhost:5000/suggestions", {
@@ -40,25 +43,27 @@ function checkText(event) {
 }
 
 function createButton(element) {
-  const button = document.createElement('button');
-  button.classList.add('vera-button');
-  button.innerHTML = 'Check Text';
+  const button = document.createElement("button");
+  button.classList.add("vera-button");
+  button.innerHTML = "Check Text";
 
   // make the button float to the top right of the element
   const rect = element.getBoundingClientRect();
   console.log(rect);
-  button.style.top = '5px';
+  button.style.top = "5px";
   button.style.left = `${rect.width - 100}px`;
-  button.style.position = 'absolute';
+  button.style.position = "absolute";
 
-  button.id = 'vera-button';
+  button.id = "vera-button";
 
-  button.onclick = checkText;
+  button.onclick = function () {
+    checkText(element);
+  };
   element.parentNode.insertBefore(button, element.nextSibling);
 }
 
 function deleteButton() {
-  const button = document.getElementById('vera-button');
+  const button = document.getElementById("vera-button");
   button.parentNode.removeChild(button);
 }
 
