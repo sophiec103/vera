@@ -3,6 +3,10 @@
     color:black !important;
 }
 
-.vera-editable {
-    border: 5px solid #ffabc9 !important;
+.vera-button {
+    background-color:#ffabc9;
+    color:black;
+    border:2px solid #642e41;
+    padding: 2px 4px;
+    border-radius: 2px;
 }
