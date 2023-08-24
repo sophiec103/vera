@@ -150,12 +150,13 @@ function update(element) {
 
 //map of words and suggestions
 const map = new Map();
-map.set("sorry", "replace with a thank you for their accommodation"); //value cannot include full key or will cause issues
+map.set("sorry", "confirm whether it is necessary to be apologetic"); //value cannot include full key or will cause issues
 map.set("maybe", "have some more confidence!");
 map.set("i think", "you know!");
 map.set("just", "consider rephrasing");
 map.set("can you please", "a 'please' will suffice!");
 map.set("probably", "be more certain!");
+map.set("possibly", "be more definite!");
 map.set("might", "you can do it!");
 map.set("does that make any sense?", "it makes sense!");
 map.set("am i making any sense?", "you are making sense!");
