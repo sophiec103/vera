@@ -21,8 +21,8 @@ document.addEventListener(
 );
 
 function checkText(element, event) {
-  const text = element.isContentEditable ? element.innerHTML : element.value; // Get the text from the element
-  event.target.textContent = "Checking..."; // Change the button text to "Checking..."
+  const text = element.isContentEditable ? element.innerHTML : element.value;
+  event.target.textContent = "Checking...";
 
   fetch("http://localhost:5000/suggestions", {
     method: "POST",
@@ -33,10 +33,26 @@ function checkText(element, event) {
   })
     .then((response) => response.json())
     .then((result) => {
-      event.target.textContent = "Check Text"; // Change the button text back to "Check Text"
-      // Update the element with the suggestions received from the API
-      const suggestionsLine = `<div class="vera-suggestions">${result}</div>`;
+      // Remove the "Checking..." button
+      event.target.parentNode.removeChild(event.target);
 
+      // Create "accept" and "reject" buttons
+      const acceptButton = document.createElement("button");
+      acceptButton.innerHTML = "Accept";
+      acceptButton.classList.add("vera-accept-button");
+      acceptButton.onclick = () => acceptSuggestion(element, result);
+
+      const rejectButton = document.createElement("button");
+      rejectButton.innerHTML = "Reject";
+      rejectButton.classList.add("vera-reject-button");
+      rejectButton.onclick = () => rejectSuggestion(element);
+
+      // Insert the buttons next to the element
+      element.parentNode.insertBefore(acceptButton, element.nextSibling);
+      element.parentNode.insertBefore(rejectButton, acceptButton.nextSibling);
+
+      // Update the element with the suggestions
+      const suggestionsLine = `<div class="vera-suggestions">${result}</div>`;
       if (element.isContentEditable) {
         element.innerHTML += suggestionsLine;
       } else {
@@ -44,6 +60,40 @@ function checkText(element, event) {
       }
     })
     .catch((error) => console.error("There was an error!", error));
+}
+
+function acceptSuggestion(element, suggestion) {
+  // Replace the user input text with the suggestion
+  if (element.isContentEditable) {
+    element.innerHTML = suggestion;
+  } else {
+    element.value = suggestion;
+  }
+
+  // Remove the suggestion and buttons
+  rejectSuggestion(element);
+}
+
+function rejectSuggestion(element) {
+  // Remove the suggestion div
+  const suggestionDiv = element.querySelector(".vera-suggestions");
+  if (suggestionDiv) {
+    suggestionDiv.parentNode.removeChild(suggestionDiv);
+  }
+
+  // Remove the "accept" and "reject" buttons
+  const acceptButton = element.parentNode.querySelector(".vera-accept-button");
+  if (acceptButton) {
+    acceptButton.parentNode.removeChild(acceptButton);
+  }
+
+  const rejectButton = element.parentNode.querySelector(".vera-reject-button");
+  if (rejectButton) {
+    rejectButton.parentNode.removeChild(rejectButton);
+  }
+
+  // Create the "Check Text" button again
+  createButton(element);
 }
 
 function createButton(element) {
