@@ -1,6 +1,7 @@
 import os
 import openai
-from flask import Flask
+from flask import Flask, jsonify, request
+from flask_cors import CORS
 from constants import OPENAI_API_KEY
 
 #openai.organization = "YOUR_ORG_ID"
@@ -10,13 +11,15 @@ openai.Model.list()
 sentences = "I was just wondering if this works? I'm not sure, but I think my idea works better. Thank you! Sorry for bothering you. Have a nice day."
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/')
 def hello_world():
     return 'Hello, World!'
 
-@app.route('/suggestions')
+@app.route('/suggestions', methods=['POST'])
 def retrieve_suggestions():
+    sentences = request.json['sentences']
     response = openai.ChatCompletion.create(
     model="gpt-3.5-turbo",
     messages=[
@@ -26,5 +29,4 @@ def retrieve_suggestions():
     temperature=0,
     )
     result = response['choices'][0]['message']['content']
-    print(response)
-    return result
+    return jsonify(result)
