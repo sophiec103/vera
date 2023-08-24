@@ -64,7 +64,9 @@ function createButton(element) {
 
 function deleteButton() {
   const button = document.getElementById("vera-button");
-  button.parentNode.removeChild(button);
+  if (button) {
+    button.parentNode.removeChild(button);
+  }
 }
 
 function update() {
