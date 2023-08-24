@@ -9,14 +9,33 @@ document.addEventListener(
   true
 );
 
-function checkText(element) {
-  // call the API to check the text
+function checkText(event) {
+  const element = event.target; // Get the target element from the event
+  const text = element.isContentEditable ? element.innerHTML : element.value; // Get the text from the element
+
+  fetch("http://localhost:5000/suggestions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ sentences: text }),
+  })
+    .then((response) => response.json())
+    .then((result) => {
+      // Update the element with the suggestions received from the API
+      if (element.isContentEditable) {
+        element.innerHTML = result;
+      } else {
+        element.value = result;
+      }
+    })
+    .catch((error) => console.error("There was an error!", error));
 }
 
 function createButton(element) {
   const button = document.createElement("button");
   button.innerHTML = "Check";
-  button.onclick = checkText(element);
+  button.onclick = checkText;
   element.parentNode.insertBefore(button, element.nextSibling);
 }
 
