@@ -121,6 +121,7 @@ function createButton(element) {
 
   button.onclick = function (event) {
     checkText(element, event);
+    update(element);
   };
   element.parentNode.insertBefore(button, element.nextSibling);
 }
@@ -132,14 +133,14 @@ function deleteButton() {
   }
 }
 
-function update() {
+function update(element) {
   //update the check
-  if (["TEXTAREA", "INPUT"].includes(document.activeElement.nodeName)) {
+  if (["TEXTAREA", "INPUT"].includes(element.nodeName)) {
     // it is in textarea, input
-    checkMisogyny(document.activeElement.value);
-  } else if (document.activeElement.isContentEditable) {
+    checkMisogyny(element.value, element);
+  } else if (element.isContentEditable) {
     // it is in contentEditable element
-    checkMisogyny(document.activeElement.innerHTML);
+    checkMisogyny(element.innerHTML, element);
   } else {
     // not above
   }
@@ -161,7 +162,7 @@ map.set("i was wondering", "be more direct!");
 map.set("i'm no expert", "don't underestimate yourself!");
 
 //check for misogyny-conforming language
-function checkMisogyny(text) {
+function checkMisogyny(text, element) {
   console.log(text); //returns the text
   if (text != null && text != undefined) {
     //remove previous spans
@@ -176,9 +177,8 @@ function checkMisogyny(text) {
     for (let i = 0; i < map.size; i++) {
       current = keys.next().value;
       if (text.toLowerCase().includes(current)) {
-        console.log(map.get(current));
-        var index = innerHTML.toLowerCase().indexOf(current);
         var newIndex = -1;
+        var index = text.toLowerCase().indexOf(current);
         if (index >= 0) {
           innerHTML =
             innerHTML.substring(0, index) +
@@ -212,7 +212,7 @@ function checkMisogyny(text) {
         "</span>" +
         innerHTML.substring(index + 1);
     }
-    document.activeElement.innerHTML = innerHTML;
+    element.innerHTML = innerHTML;
   }
 }
 
