@@ -41,16 +41,12 @@ map.set("i'm not too sure", "don't doubt yourself!");
 map.set('i was wondering', 'be more direct!');
 map.set("i'm no expert", "don't underestimate yourself!");
 
-var styleEl = document.createElement('style');
-styleEl.innerHTML = '.highlighted{background-color:#ffabc9; color:black !important;}';
-document.head.appendChild(styleEl);
-
 //check for misogyny-conforming language
 function checkMisogyny(text){
   console.log(text); //returns the text
       if(text != null && text != undefined){
         //remove previous spans
-        var current = '<span class="highlighted"';
+        var current = '<span class="vera-highlighted"';
         text = deleteSpans(current, text);
         current = '</span>';
         text = deleteSpans(current, text);
@@ -65,11 +61,11 @@ function checkMisogyny(text){
                 var index = innerHTML.toLowerCase().indexOf(current);
                 var newIndex = -1;
                 if (index >= 0) {
-                 innerHTML = innerHTML.substring(0,index) + `<span class="highlighted" title="${map.get(current)}">` + innerHTML.substring(index,index+current.length) + "</span>" + innerHTML.substring(index + current.length);
+                 innerHTML = innerHTML.substring(0,index) + `<span class="vera-highlighted" title="${map.get(current)}">` + innerHTML.substring(index,index+current.length) + "</span>" + innerHTML.substring(index + current.length);
                  newIndex = innerHTML.toLowerCase().indexOf(current, index);
                 }
                 while (newIndex >= 0) { //find other instances of the word
-                 innerHTML = innerHTML.substring(0,newIndex) + `<span class="highlighted" title="${map.get(current)}">` + innerHTML.substring(newIndex,newIndex+current.length) + "</span>" + innerHTML.substring(newIndex + current.length);
+                 innerHTML = innerHTML.substring(0,newIndex) + `<span class="vera-highlighted" title="${map.get(current)}">` + innerHTML.substring(newIndex,newIndex+current.length) + "</span>" + innerHTML.substring(newIndex + current.length);
                  index = newIndex;
                  newIndex = text.toLowerCase().indexOf(current, index);
                 }
@@ -79,7 +75,7 @@ function checkMisogyny(text){
       let exclamationCount = text.split("!");
       if(exclamationCount.length>3){
         index = innerHTML.lastIndexOf("!");
-        innerHTML = innerHTML.substring(0,index) + `<span class="highlighted" title="use less exclamation marks to sound more serious and professional">` + "!" + "</span>" + innerHTML.substring(index + 1);
+        innerHTML = innerHTML.substring(0,index) + `<span class="vera-highlighted" title="use less exclamation marks to sound more serious and professional">` + "!" + "</span>" + innerHTML.substring(index + 1);
       }
       document.activeElement.innerHTML = innerHTML;
    }
@@ -101,3 +97,4 @@ function deleteSpans(current, text){
   }
    return innerHTML;
 }
+
