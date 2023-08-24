@@ -1,28 +1,32 @@
-document.addEventListener('focusin', function() {
-  update();
+document.addEventListener('focusin', function(event) {
+  if (event.target.isContentEditable) {
+    console.log(event.target);
+    createButton(event.target);
+  }
 }, true);
 
-document.body.onkeyup = function(e){
-    if(e.keyCode == 32){
-      console.log('Space pressed');
-      update();
-    }
+function checkText(element) {
+  // call the API to check the text
+}
+
+function createButton(element) {
+  const button = document.createElement('button');
+  button.innerHTML = 'Check';
+  button.onclick = checkText(element);
+  element.parentNode.insertBefore(button, element.nextSibling);
 }
 
 function update(){ //update the check
   if (['TEXTAREA', 'INPUT'].includes(document.activeElement.nodeName)) {
     // it is in textarea, input
-    console.log("1");
     checkMisogyny(document.activeElement.value);
   }
   else if (document.activeElement.isContentEditable) {
     // it is in contentEditable element
-    console.log("2");
     checkMisogyny(document.activeElement.innerHTML);
   }
   else {
     // not above
-    console.log("3");
   }
 }
 
@@ -97,4 +101,3 @@ function deleteSpans(current, text){
   }
    return innerHTML;
 }
-
