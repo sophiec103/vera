@@ -1,4 +1,4 @@
-"# TechNova-Chrome-Extension" 
+# vera (Chrome Extension)
 
 A chrome extension used to detect uncertainty or a lack of confidence in writing and provide suggestions to combat it! Targeted towards gender minorities in the workplace.
 When added, it automatically generates a button in editable text areas like Gmail, Outlook, LinkedIn, etc. 
